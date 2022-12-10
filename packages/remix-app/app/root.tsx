@@ -24,9 +24,9 @@ export let meta: MetaFunction = () => ({
 
 export let links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export let loader = async ({ request }: DataFunctionArgs) => {
+export let loader = async ({ request, context }: DataFunctionArgs) => {
   const cookie = request.headers.get('Cookie')
-  const userSession = await getUserSession(cookie)
+  const userSession = await getUserSession(context.env, cookie)
 
   userSession.init()
 

@@ -1,19 +1,20 @@
 import { createCookieSessionStorage } from '@remix-run/cloudflare'
 
-let { commitSession, destroySession, getSession } = createCookieSessionStorage({
-  cookie: {
-    name: '__user',
-    sameSite: 'lax',
-    path: '/',
-    httpOnly: true,
-    secure: true,
-    maxAge: 60 * 60 * 24 * 7,
-    secrets: ['secret'],
-  },
-})
+export async function getUserSession(env: Env, cookie?: string | null) {
+  let { commitSession, destroySession, getSession } =
+    createCookieSessionStorage({
+      cookie: {
+        name: '__user',
+        sameSite: 'lax',
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        maxAge: 60 * 60 * 24 * 7,
+        secrets: [env.SESSION_SECRET],
+      },
+    })
 
-export async function getUserSession(cookie?: string | null) {
-  const session = await getSession(cookie)
+  let session = await getSession(cookie)
 
   function get(key: string) {
     return session.get(key)
@@ -21,6 +22,14 @@ export async function getUserSession(cookie?: string | null) {
 
   function set(key: string, value: string) {
     session.set(key, value)
+  }
+
+  async function commit() {
+    return await commitSession(session, { maxAge: 60 * 60 * 24 * 7 })
+  }
+
+  async function destroy() {
+    return await destroySession(session)
   }
 
   function getId() {
@@ -32,20 +41,20 @@ export async function getUserSession(cookie?: string | null) {
 
     return id
   }
-
   const id = getId()
+
+  function init() {
+    if (!get('id')) {
+      set('id', id)
+    }
+  }
 
   return {
     id,
-    commit: async () =>
-      await commitSession(session, { maxAge: 60 * 60 * 24 * 7 }),
+    commit,
     get,
-    init: () => {
-      if (!get('id')) {
-        set('id', id)
-      }
-    },
+    init,
     set,
-    destroy: async () => await destroySession(session),
+    destroy,
   }
 }
