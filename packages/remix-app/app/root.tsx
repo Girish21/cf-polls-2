@@ -1,4 +1,9 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  DataFunctionArgs,
+  LinksFunction,
+  MetaFunction,
+} from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import {
   Links,
   LiveReload,
@@ -8,6 +13,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 import styles from '~/styles/app.css'
+import { getUserSession } from '~/utils/user-session'
 
 export let meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -18,8 +24,13 @@ export let meta: MetaFunction = () => ({
 
 export let links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export let loader = () => {
-  return null
+export let loader = async ({ request }: DataFunctionArgs) => {
+  const cookie = request.headers.get('Cookie')
+  const userSession = await getUserSession(cookie)
+
+  userSession.init()
+
+  return json(null, { headers: { 'Set-Cookie': await userSession.commit() } })
 }
 
 export default function App() {
