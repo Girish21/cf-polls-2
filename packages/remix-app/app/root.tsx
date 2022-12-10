@@ -1,9 +1,5 @@
-import type {
-  DataFunctionArgs,
-  LinksFunction,
-  MetaFunction,
-} from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
+import type { DataFunctionArgs } from '@remix-run/cloudflare'
 import {
   Links,
   LiveReload,
@@ -11,7 +7,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from '@remix-run/react'
 import styles from '~/styles/app.css'
 
@@ -24,18 +19,11 @@ export let meta: MetaFunction = () => ({
 
 export let links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export let loader = async ({ context }: DataFunctionArgs) => {
-  let id = context.env.COUNTER.idFromName('root')
-  let object = context.env.COUNTER.get(id)
-  let doResponse = await object.fetch('https://../increment')
-  let count = Number(await doResponse.text())
-
-  return json({ count })
+export let loader = ({ request }: DataFunctionArgs) => {
+  return null
 }
 
 export default function App() {
-  let loaderData = useLoaderData<typeof loader>()
-
   return (
     <html lang='en'>
       <head>
@@ -44,7 +32,6 @@ export default function App() {
       </head>
       <body>
         <Outlet />
-        <p className='text-xl'>Invocatoins: {loaderData.count}</p>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
