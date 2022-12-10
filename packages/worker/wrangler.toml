@@ -1,0 +1,16 @@
+name = "remix-cloudflare-template"
+main = "src/index.ts"
+compatibility_date = "2022-11-17"
+compatibility_flags = ["streams_enable_constructors"]
+
+[site]
+bucket = "../remix-app/public"
+
+[durable_objects]
+bindings = [
+  {name = "COUNTER", class_name = "CounterDurableObject"},
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["CounterDurableObject"]
