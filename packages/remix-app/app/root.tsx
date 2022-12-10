@@ -1,5 +1,4 @@
 import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
-import type { DataFunctionArgs } from '@remix-run/cloudflare'
 import {
   Links,
   LiveReload,
@@ -19,7 +18,7 @@ export let meta: MetaFunction = () => ({
 
 export let links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export let loader = ({ request }: DataFunctionArgs) => {
+export let loader = () => {
   return null
 }
 

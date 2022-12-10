@@ -1,4 +1,5 @@
 export default class PollsDurableObject {
+  // @ts-ignore
   private options: OptionsMap | null = null
 
   constructor(private state: DurableObjectState) {
@@ -9,7 +10,6 @@ export default class PollsDurableObject {
   }
 
   async fetch(request: Request) {
-    console.log(request.url)
     let url = new URL(request.url)
     switch (url.pathname) {
       case '/':
