@@ -4,7 +4,7 @@ import { createRequestHandler } from '@remix-run/cloudflare'
 import * as build from 'remix-app'
 import manifestJSON from '__STATIC_CONTENT_MANIFEST'
 
-export { default as CounterDurableObject } from 'counter-do'
+export { default as PollsDurableObject } from 'polls-do'
 
 let assetManifest = JSON.parse(manifestJSON)
 let handleRemixRequest = createRequestHandler(build, process.env.NODE_ENV)

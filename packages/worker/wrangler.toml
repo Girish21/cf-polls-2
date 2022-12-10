@@ -10,9 +10,9 @@ bucket = '../remix-app/public'
 
 [durable_objects]
 bindings = [
-	{ name = 'COUNTER', class_name = 'CounterDurableObject' },
+	{name = "POLLSDO", class_name = "PollsDurableObject"}
 ]
 
 [[migrations]]
 tag = 'v1'
-new_classes = ['CounterDurableObject']
+new_classes = ['PollsDurableObject']
