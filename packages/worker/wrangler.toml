@@ -10,7 +10,7 @@ bucket = '../remix-app/public'
 
 [durable_objects]
 bindings = [
-	{name = "POLLSDO", class_name = "PollsDurableObject"}
+	{name = 'POLLSDO', class_name = 'PollsDurableObject'}
 ]
 
 [[migrations]]
