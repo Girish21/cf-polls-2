@@ -10,7 +10,7 @@
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.2.0",
     "@remix-run/cloudflare": "^1.8.2",
-    "counter-do": "*",
+    "polls-do": "*",
     "remix-app": "*"
   },
   "devDependencies": {
