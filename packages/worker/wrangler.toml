@@ -1,16 +1,18 @@
-name = "remix-cloudflare-template"
-main = "src/index.ts"
-compatibility_date = "2022-11-17"
-compatibility_flags = ["streams_enable_constructors"]
+
+name = 'cf-polls'
+main = 'src/index.ts'
+compatibility_date = '2022-11-17'
+compatibility_flags = ['streams_enable_constructors']
+account_id = '8b97ccfb2affaf6aa5bb0094455d9ce3'
 
 [site]
-bucket = "../remix-app/public"
+bucket = '../remix-app/public'
 
 [durable_objects]
 bindings = [
-  {name = "COUNTER", class_name = "CounterDurableObject"},
+	{ name = 'COUNTER', class_name = 'CounterDurableObject' },
 ]
 
 [[migrations]]
-tag = "v1"
-new_classes = ["CounterDurableObject"]
+tag = 'v1'
+new_classes = ['CounterDurableObject']
