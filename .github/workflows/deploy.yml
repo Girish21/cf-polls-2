@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    if: github.repository != 'Girish21/remix-cloudflare-workers-template'
+    if: github.repository == 'Girish21/cf-polls-2'
     runs-on: ubuntu-latest
     name: 🕊 Deploy
     steps:
